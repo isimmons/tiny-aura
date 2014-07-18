@@ -6,7 +6,7 @@ $uri = urldecode($uri);
 
 $publicPath = __DIR__.'/public'; 
 
-$requested = $publicPath.$uri;
+$requested = $publicPath.'/'.$uri;
 
 if ($uri !== '/' and file_exists($requested))
 {
