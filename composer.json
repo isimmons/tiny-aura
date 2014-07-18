@@ -8,6 +8,9 @@
             "email": "isimmons33@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
-    "require": {}
+    "require-dev": {
+        "phpspec/phpspec": "2.0.*",
+        "behat/behat": "3.0.*"
+    },
+    "minimum-stability": "stable"
 }
