@@ -1,0 +1,13 @@
+{
+    "name": "lotus/tiny-aura",
+    "description": "A tiny custom framework built on AuraPHP packages",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ian Simmons",
+            "email": "isimmons33@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
