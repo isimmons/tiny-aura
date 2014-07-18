@@ -8,6 +8,9 @@
             "email": "isimmons33@gmail.com"
         }
     ],
+    "require": {
+        "filp/whoops": "1.1.2"
+    },
     "require-dev": {
         "phpspec/phpspec": "2.0.*"
     },
