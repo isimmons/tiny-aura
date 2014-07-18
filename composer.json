@@ -9,8 +9,7 @@
         }
     ],
     "require-dev": {
-        "phpspec/phpspec": "2.0.*",
-        "behat/behat": "3.0.*"
+        "phpspec/phpspec": "2.0.*"
     },
     "minimum-stability": "stable"
 }
