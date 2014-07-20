@@ -2,10 +2,7 @@
 
 use TinyAura\Exceptions\ErrorHandler;
 use TinyAura\Config\Config;
-use Aura\Di\Container;
-use Aura\Di\Factory;
-use Aura\Di\Forge;
-use Aura\Di\Config as DiConfig;
+use TinyAura\Container\Container;
 
 class TinyAura {
     
@@ -15,12 +12,13 @@ class TinyAura {
 
     public function __construct()
     {
-        $this->container = new Container(new Forge(new DiConfig));
+        $this->container = new Container;
     }
 
     public function run()
     {
         $this->loadErrorHandler();
+        $this->loadHelpers();
         $this->loadConfig();
     }
 
@@ -30,23 +28,49 @@ class TinyAura {
         $errorHandler->load();
     }
 
+    private function loadHelpers()
+    {
+        require __DIR__.'/Support/helpers.php';
+    }
+
     private function loadConfig()
     {
         $configLoader = new Config;
         $configs = $configLoader->loadAll();
         
-        $configs = $this->arrayToObject($configs);
-        
-        $this->storeConfig($configs);
-        
-    }
+        $configs = arrayToObject($configs);
 
-    protected function storeConfig($configs)
+        $this->container->set('config', $configs);
+    }
+    
+    /**
+    * Binds an object in the DI container
+    *
+    * @param string $name
+    * @param object $object
+    * @return mixed
+    */
+    public function bind($name, $object)
     {
-        $this->container->set('config', $configs);        
+        return $this->container->set($name, $object);
     }
 
+    /**
+    * Resolves an object out of the DI container
+    *
+    * @param string $name
+    * @return mixed
+    */
+    public function make($name)
+    {
+        return $this->container->get($name);
+    }
 
+    /**
+    * Get an instance of the app
+    *
+    * @return TinyAura
+    */
     public static function getInstance()
     {
         if( !( self::$app instanceof self))
@@ -57,18 +81,4 @@ class TinyAura {
         return self::$app;
     }
 
-    public function getConfig($configFile, $value)
-    {
-        return $this->container->get('config')->$configFile->$value;
-    }
-
-    protected function arrayToObject($d) {
-        if (is_array($d)) {
-            return (object) array_map(__METHOD__, $d);
-        }
-        else {
-            // Return object
-            return $d;
-        }
-    }
 }
