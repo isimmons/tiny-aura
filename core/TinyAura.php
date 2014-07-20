@@ -3,9 +3,10 @@
 use TinyAura\Exceptions\ErrorHandler;
 use TinyAura\Config\Config;
 use TinyAura\Container\Container;
+use TinyAura\Router\Route;
 
 class TinyAura {
-    
+
     public static $app;
 
     protected $container;
@@ -20,6 +21,7 @@ class TinyAura {
         $this->loadErrorHandler();
         $this->loadHelpers();
         $this->loadConfig();
+        $this->loadRoutes();
     }
 
     private function loadErrorHandler()
@@ -42,7 +44,17 @@ class TinyAura {
 
         $this->container->set('config', $configs);
     }
-    
+
+    private function loadRoutes()
+    {
+        $router = new Route;
+        $routes = $router->loadRoutes();
+
+        $routes = arrayToObject($routes);
+        
+        $this->container->set('routes', $routes);
+    }
+
     /**
     * Binds an object in the DI container
     *
